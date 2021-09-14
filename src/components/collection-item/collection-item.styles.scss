@@ -4,6 +4,8 @@
   flex-direction: column;
   height: 350px;
   align-items: center;
+  position: relative;
+  justify-content: center;
 
   .image {
     width: 100%;
@@ -27,6 +29,21 @@
 
     .price {
       width: 10%;
+    }
+  }
+
+  .add-to-cart-button {
+    position: absolute;
+    display: none;
+    opacity: 0.85;
+  }
+
+  &:hover {
+    opacity: 0.8;
+
+    .add-to-cart-button {
+      display: flex;
+      justify-content: center;
     }
   }
 }
