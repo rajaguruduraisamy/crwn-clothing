@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/svg/Logo.svg';
+import { CartIcon } from '../cart-icon/cart-icon.component';
 import { auth } from '../../firebase/firebase.utils';
 import './header.styles.scss';
 
@@ -18,6 +19,7 @@ const BaseHeader = ({ currentUser }) => {
           <div className='option' onClick={() => { auth.signOut()}}>SIGNOUT {currentUser.displayName}</div> : 
           <Link to='/signin' className='option'>SIGNIN</Link>
         }
+        <CartIcon></CartIcon>
       </div>
     </div>
   )
