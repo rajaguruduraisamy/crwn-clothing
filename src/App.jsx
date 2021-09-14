@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.scss';
 import { HomePage } from './pages/homepage/homepage.component';
@@ -26,12 +26,10 @@ class BaseApp extends Component {
         const userRef = await createUser(userAuth);
 
         userUpdateListener(userRef, snapshot => {
-          this.setState({
-            currentUser: {
-              id: snapshot.id,
-              ...snapshot.data()
-            }
-          })
+          setCurrentUser({
+            id: snapshot.id,
+            ...snapshot.data()
+          });
         });
       }
       setCurrentUser(userAuth);
@@ -49,12 +47,16 @@ class BaseApp extends Component {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/shop' component={ShopPage} />
-          <Route exact path='/signin' component={SignInAndSignUpPage} />
+          <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/'></Redirect>) : (<SignInAndSignUpPage />)} />
         </Switch>
       </div>
     );
   }
 };
+
+const mapStateToProps = ({user}) => ({
+  currentUser: user.currentUser
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -62,4 +64,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export const App = connect(null, mapDispatchToProps)(BaseApp);
+export const App = connect(mapStateToProps, mapDispatchToProps)(BaseApp);
