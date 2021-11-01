@@ -9,8 +9,8 @@ export const CollectionPreview = ({ title, items }) => {
       <h1 className='title'>{title}</h1>
       <div className='preview'>
         {
-          items.filter((item, idx) => idx < 4).map(({ id, ...otherProps}) => {
-            return (<CollectionItem key={id} {...otherProps}></CollectionItem>);
+          items.filter((item, idx) => idx < 4).map((item) => {
+            return (<CollectionItem key={item.id} item={item}></CollectionItem>);
           })
         }
       </div>
